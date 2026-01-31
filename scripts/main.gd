@@ -56,6 +56,7 @@ func _ready() -> void:
 	connect("camera_shake", _on_camera_shake)
 	connect("gameover", _on_gameover)
 	
+	
   	#var gameover = self.get_node("gameover")
 	#gameover.connect("restart", _on_restart)
 	#var intro = self.get_node("intro")
