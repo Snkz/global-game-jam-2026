@@ -1,11 +1,36 @@
-[gd_scene load_steps=7 format=3 uid="uid://bd0p4lyqmpq2b"]
+[gd_scene load_steps=10 format=3 uid="uid://bd0p4lyqmpq2b"]
 
-[ext_resource type="Script" path="res://scripts/character.gd" id="1_vlqk7"]
-[ext_resource type="Texture2D" uid="uid://ur6rk6h3e5nm" path="res://icon.svg" id="2_pwuls"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_2dn2x"]
+[ext_resource type="PackedScene" uid="uid://dwk2ykkj67oc" path="res://scenes/character.tscn" id="1_4v135"]
+[ext_resource type="Texture2D" uid="uid://3uejhexesbf6" path="res://textures/chr_ogre_f-00.iso.png" id="2_42vl0"]
+[ext_resource type="Texture2D" uid="uid://bev1j2cylomt" path="res://textures/nebula_1024_left2.png" id="2_be4sb"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1mhru"]
-radius = 19.0
-height = 42.0
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_eo68y"]
+load_path = "res://.godot/imported/chr_ogre_m-00.iso.png-5b4580cce82a2405a719e3ea5bde5295.ctex"
+
+[sub_resource type="GDScript" id="GDScript_g0llb"]
+script/source = "extends CharacterBody2D
+#PLAYER 2
+
+const SPEED = 300.0
+const JUMP_VELOCITY = -400.0
+
+
+func _physics_process(delta: float) -> void:
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var direction := Input.get_axis(\"ui_left\", \"ui_right\")
+	if direction:
+		velocity.x = direction * SPEED
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+
+	move_and_slide()
+"
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_28l75"]
 
@@ -13,32 +38,49 @@ height = 42.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_vxrib"]
 
-[node name="main" type="Node2D"]
-position = Vector2(400, 5)
+[node name="main" type="Camera2D"]
+anchor_mode = 0
+script = ExtResource("1_2dn2x")
 
-[node name="character" type="CharacterBody2D" parent="."]
-scale = Vector2(1, 0.95273)
-script = ExtResource("1_vlqk7")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="character"]
-shape = SubResource("CapsuleShape2D_1mhru")
+[node name="character" parent="." instance=ExtResource("1_4v135")]
+position = Vector2(100, 400)
 
 [node name="Sprite2D" type="Sprite2D" parent="character"]
-texture = ExtResource("2_pwuls")
+scale = Vector2(3, 3)
+texture = SubResource("CompressedTexture2D_eo68y")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-scale = Vector2(1.00602, 0.930869)
+[node name="second_player" parent="." instance=ExtResource("1_4v135")]
+position = Vector2(650, 400)
+rotation = -3.14159
+scale = Vector2(1, -1)
+script = SubResource("GDScript_g0llb")
 
-[node name="Base" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(0, 580)
+[node name="Sprite2D" type="Sprite2D" parent="second_player"]
+position = Vector2(-20, -15)
+scale = Vector2(3, 3)
+texture = ExtResource("2_42vl0")
+
+[node name="Bounds" type="StaticBody2D" parent="."]
+
+[node name="Base" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(400, 500)
 shape = SubResource("WorldBoundaryShape2D_28l75")
 
-[node name="Right" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(340, 600)
+[node name="Right" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(750, 600)
 rotation = 4.71239
 shape = SubResource("WorldBoundaryShape2D_twxdk")
 
-[node name="Left" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-340, 600)
+[node name="Left" type="CollisionShape2D" parent="Bounds"]
+position = Vector2(50, 600)
 rotation = 1.5708
 shape = SubResource("WorldBoundaryShape2D_vxrib")
+
+[node name="TextureRect" type="TextureRect" parent="Bounds"]
+z_index = -1
+offset_left = -120.0
+offset_top = -120.0
+offset_right = 904.0
+offset_bottom = 904.0
+texture = ExtResource("2_be4sb")
+metadata/_edit_use_anchors_ = true
