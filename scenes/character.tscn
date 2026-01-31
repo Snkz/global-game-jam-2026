@@ -6,12 +6,29 @@
 script/source = "extends CharacterBody2D
 # PLAYER 1
 
+signal character_draw(int)
+
 func _ready():
 	get_node(\"Early\").visible = false
 	get_parent().get_node(\"Ready\").connect(\"gamestart\", _on_gamestart)
 
+var can_press = false
+var failure = false
 func _on_gamestart():
-	get_node(\"Early\").visible = true
+	if (not failure):
+		can_press = true
+	pass
+
+func on_lost():
+	if (not failure):
+		failure = true
+		# Play animation for first time
+		if (not can_press):
+			# Show failure indicator
+			get_node(\"Early\").visible = true
+			get_parent().camera_shake.emit(0.15, 0.25)
+
+			
 	pass
 	
 func _physics_process(delta: float) -> void:
@@ -20,6 +37,23 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	move_and_slide()
+	
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_SHIFT:
+			match event.location:
+				KEY_LOCATION_LEFT:
+					if (can_press and not failure):
+						character_draw.emit(1)
+						can_press = false
+					else:
+						on_lost()
+						
+				KEY_LOCATION_RIGHT:
+					pass
+				KEY_LOCATION_UNSPECIFIED:
+					pass
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1mhru"]

@@ -58,12 +58,29 @@ animations = [{
 script/source = "extends CharacterBody2D
 # PLAYER 2
 
+signal character_draw(int)
+
 func _ready():
 	get_node(\"Early\").visible = false
 	get_parent().get_node(\"Ready\").connect(\"gamestart\", _on_gamestart)
 
+var can_press = false
+var failure = false
 func _on_gamestart():
-	get_node(\"Early\").visible = true
+	if (not failure):
+		can_press = true
+	pass
+
+func on_lost():
+	if (not failure):
+		failure = true
+		# Play animation for first time
+		if (not can_press):
+			# Show failure indicator
+			get_node(\"Early\").visible = true
+			get_parent().camera_shake.emit(0.15, 0.25)
+
+			
 	pass
 	
 func _physics_process(delta: float) -> void:
@@ -72,6 +89,22 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	move_and_slide()
+	
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_SHIFT:
+			match event.location:
+				KEY_LOCATION_RIGHT:
+					if (can_press and not failure):
+						character_draw.emit(2)
+						can_press = false
+					else:
+						on_lost()
+
+				KEY_LOCATION_LEFT:
+					pass
+				KEY_LOCATION_UNSPECIFIED:
+					pass
 "
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_03phb"]
@@ -158,10 +191,10 @@ region = Rect2(615.25, 160.46, 447.7, 149.848)
 anchor_mode = 0
 script = ExtResource("1_2dn2x")
 
-[node name="character" parent="." instance=ExtResource("1_4v135")]
+[node name="first_player" parent="." instance=ExtResource("1_4v135")]
 position = Vector2(100, 400)
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="character"]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="first_player"]
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_o6dta")
 animation = &"attack"
