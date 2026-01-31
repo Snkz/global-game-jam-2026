@@ -11,6 +11,7 @@ signal character_draw(int)
 func _ready():
 	get_node(\"Early\").visible = false
 	get_parent().get_node(\"Ready\").connect(\"gamestart\", _on_gamestart)
+	
 
 var can_press = false
 var failure = false

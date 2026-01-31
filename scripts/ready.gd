@@ -6,6 +6,11 @@ func _ready() -> void:
 	var timer = get_node("Timer")
 	timer.timeout.connect(_on_timer_timeout)
 	connect("gameover", _on_gameover)
+	var rng = RandomNumberGenerator.new()
+	var wait = rng.randf_range(3, 10);
+	print("WAITING...: ", wait)
+	timer.wait_time = wait
+	timer.start()
 
 	
 func _on_timer_timeout():
