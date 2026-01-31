@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bd0p4lyqmpq2b"]
+[gd_scene load_steps=27 format=3 uid="uid://bd0p4lyqmpq2b"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2dn2x"]
 [ext_resource type="PackedScene" uid="uid://dwk2ykkj67oc" path="res://scenes/character.tscn" id="1_4v135"]
@@ -12,6 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://ldtkdbkpxe4o" path="res://textures/chr_ogre_m-00.iso.png" id="9_sbfmx"]
 [ext_resource type="Script" path="res://scripts/ready.gd" id="11_orxk0"]
 [ext_resource type="Texture2D" uid="uid://c3xuscdbwlgt4" path="res://textures/GameCube - Super Smash Bros. Melee - Miscellaneous - In-Game Text.png" id="11_xebit"]
+[ext_resource type="Texture2D" uid="uid://q6ng4l654gwn" path="res://keyboard/Keyboard & Mouse/Double/keyboard_shift.png" id="13_b6cei"]
+[ext_resource type="Texture2D" uid="uid://cd3ay5g3dtt20" path="res://keyboard/Keyboard & Mouse/Double/keyboard_shift_outline.png" id="14_rerv6"]
+[ext_resource type="FontFile" uid="uid://c8radpvj1d566" path="res://keyboard/Keyboard & Mouse/Fonts/kenney_input_keyboard_&_mouse.otf" id="15_dp6vu"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_o6dta"]
 animations = [{
@@ -123,6 +126,30 @@ animations = [{
 atlas = ExtResource("11_xebit")
 region = Rect2(65.0909, 218.636, 282.727, 90.9091)
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_coq6e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_b6cei")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_rerv6")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ghnjd"]
+line_spacing = 0.0
+font = ExtResource("15_dp6vu")
+font_size = 24
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 10
+shadow_color = Color(0.104686, 5.01041e-05, 0.367052, 0)
+shadow_offset = Vector2(10, 1)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_h7ntj"]
 atlas = ExtResource("11_xebit")
 region = Rect2(19.3751, 13.5917, 369.669, 191.159)
@@ -190,6 +217,21 @@ script = ExtResource("11_orxk0")
 [node name="Timer" type="Timer" parent="Ready"]
 one_shot = true
 autostart = true
+
+[node name="shift" type="AnimatedSprite2D" parent="Ready"]
+position = Vector2(0, 300)
+sprite_frames = SubResource("SpriteFrames_coq6e")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.257648
+
+[node name="Label" type="Label" parent="Ready"]
+offset_left = -100.0
+offset_top = 350.0
+offset_right = 102.0
+offset_bottom = 381.0
+text = "Wait and Press"
+label_settings = SubResource("LabelSettings_ghnjd")
 
 [node name="Go" type="Sprite2D" parent="."]
 visible = false
