@@ -19,11 +19,7 @@ var camera_shake_strength = 0
 var game_started = false
 
 signal gameover(int, float)
-signal gamestart()
 signal camera_shake(a, b)
-
-func _on_creature_deleted(node, index) -> void:	
-	camera_shake.emit(0.2, 0.1)
 		
 func _on_restart() -> void:
 	game_time = 0.0
@@ -55,14 +51,16 @@ func _ready() -> void:
 
 	connect("camera_shake", _on_camera_shake)
 	connect("gameover", _on_gameover)
-	
-	
+	get_node("Ready").connect("gamestart", _on_gamestart)
+
+func _on_gamestart():
+	camera_shake.emit(0.5, 0.25)
+	print("HERE")
+
   	#var gameover = self.get_node("gameover")
 	#gameover.connect("restart", _on_restart)
 	#var intro = self.get_node("intro")
   	#intro.connect("restart", _on_restart)
-	
-	gamestart.emit()
 			
 func _process(delta):
 	var window_rect = get_viewport().get_visible_rect()
@@ -90,5 +88,3 @@ func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_ESCAPE:
 			get_tree().quit()
-		if event.pressed and event.keycode == KEY_1:
-			_on_camera_shake(0.1, 1)

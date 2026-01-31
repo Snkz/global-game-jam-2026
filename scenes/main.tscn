@@ -12,9 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://ldtkdbkpxe4o" path="res://textures/chr_ogre_m-00.iso.png" id="9_sbfmx"]
 [ext_resource type="Script" path="res://scripts/ready.gd" id="11_orxk0"]
 [ext_resource type="Texture2D" uid="uid://c3xuscdbwlgt4" path="res://textures/GameCube - Super Smash Bros. Melee - Miscellaneous - In-Game Text.png" id="11_xebit"]
-[ext_resource type="Texture2D" uid="uid://q6ng4l654gwn" path="res://keyboard/Keyboard & Mouse/Double/keyboard_shift.png" id="13_b6cei"]
-[ext_resource type="Texture2D" uid="uid://cd3ay5g3dtt20" path="res://keyboard/Keyboard & Mouse/Double/keyboard_shift_outline.png" id="14_rerv6"]
-[ext_resource type="FontFile" uid="uid://c8radpvj1d566" path="res://keyboard/Keyboard & Mouse/Fonts/kenney_input_keyboard_&_mouse.otf" id="15_dp6vu"]
+[ext_resource type="Texture2D" uid="uid://dblv0mrdcm6x8" path="res://keyboard/Keyboard & Mouse/Double/keyboard_shift.png" id="13_b6cei"]
+[ext_resource type="Texture2D" uid="uid://bxip4aww677qj" path="res://keyboard/Keyboard & Mouse/Double/keyboard_shift_outline.png" id="14_rerv6"]
+[ext_resource type="FontFile" uid="uid://gilqtnhlidp" path="res://keyboard/Keyboard & Mouse/Fonts/kenney_input_keyboard_&_mouse.otf" id="15_dp6vu"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_o6dta"]
 animations = [{
@@ -56,24 +56,20 @@ animations = [{
 
 [sub_resource type="GDScript" id="GDScript_g0llb"]
 script/source = "extends CharacterBody2D
-#PLAYER 2
+# PLAYER 2
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+func _ready():
+	get_node(\"Early\").visible = false
+	get_parent().get_node(\"Ready\").connect(\"gamestart\", _on_gamestart)
 
-
+func _on_gamestart():
+	get_node(\"Early\").visible = true
+	pass
+	
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis(\"ui_left\", \"ui_right\")
-	if direction:
-		velocity.x = direction * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
 "
@@ -178,6 +174,7 @@ scale = Vector2(1, -1)
 script = SubResource("GDScript_g0llb")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="second_player"]
+position = Vector2(0, 10)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_03phb")
 animation = &"win"
@@ -223,7 +220,7 @@ position = Vector2(0, 300)
 sprite_frames = SubResource("SpriteFrames_coq6e")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.257648
+frame_progress = 0.4037
 
 [node name="Label" type="Label" parent="Ready"]
 offset_left = -100.0

@@ -1,5 +1,5 @@
 extends Sprite2D
-signal gameover(int, float)
+signal gamestart()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -14,6 +14,8 @@ func _on_timer_timeout():
 	go.visible = true
 	go.get_node("Timer").start()
 	go.get_node("Timer").timeout.connect(_on_go_timer_timeout)
+	gamestart.emit()
+	print("Game start")
 
 func _on_go_timer_timeout():
 	var go = get_parent().get_node("Go")
