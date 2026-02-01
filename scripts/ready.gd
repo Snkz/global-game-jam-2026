@@ -1,6 +1,6 @@
 extends Sprite2D
 signal gamestart()
-var start_tick = 0
+var start_tick = -1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -8,7 +8,7 @@ func _ready() -> void:
 	timer.timeout.connect(_on_timer_timeout)
 	get_parent().connect("gameover", _on_gameover)
 	var rng = RandomNumberGenerator.new()
-	var wait = rng.randf_range(1, 3);
+	var wait = rng.randf_range(2, 5);
 	timer.wait_time = wait
 	timer.start()
 	
@@ -38,7 +38,11 @@ func _on_gameover(score, time) -> void:
 	var total_time = Time.get_ticks_msec() - start_tick;
 	var game = get_parent().get_node("Game")
 	game.visible = true
-	game.get_node("Label").text = " Mask OFF " + str(total_time).pad_decimals(2) + "ms"
+	if (start_tick != -1):
+		game.get_node("Label").text = " Mask OFF " + str(total_time).pad_decimals(2) + "ms"
+	else:
+		game.get_node("Label").text = " Mask OFF "
+
 	
 func _on_game_timer_timeout():
 	var game = get_parent().get_node("Game")

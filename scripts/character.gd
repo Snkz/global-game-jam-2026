@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 signal character_draw(int)
 signal character_drawn(int, Vector2)
+signal character_early(int)
 @export var player_index = 1
 
 func _ready():
@@ -9,6 +10,7 @@ func _ready():
 	get_parent().get_node("Ready").connect("gamestart", _on_gamestart)
 	get_parent().connect("gameover", _on_gameover)
 	connect("character_drawn", _on_character_drawn)
+	connect("character_early", _on_character_early)
 
 var can_press = false
 var failure = false
@@ -25,7 +27,7 @@ func _on_gameover(winner, score):
 		$Sprite2D.play(&"loss")
 			
 	
-func on_lost():
+func _on_character_early(player_index):
 	if (not failure):
 		failure = true
 		# Show failure indicator
@@ -51,10 +53,14 @@ func _unhandled_input(event: InputEvent) -> void:
 				KEY_LOCATION_LEFT:
 					if (player_index == 1 and can_press):
 						character_draw.emit(player_index)
-					elif (player_index == 1 and not can_press):
-							on_lost()
+						get_tree().get_root().set_input_as_handled()
+					elif (player_index == 1 and not can_press and not failure):
+						character_early.emit(player_index)
+						get_tree().get_root().set_input_as_handled()
 				KEY_LOCATION_RIGHT:
 					if (player_index == 2 and can_press):
 						character_draw.emit(player_index)
-					elif (player_index == 2 and not can_press):
-							on_lost()
+						get_tree().get_root().set_input_as_handled()
+					elif (player_index == 2 and not can_press and not failure):
+						character_early.emit(player_index)
+						get_tree().get_root().set_input_as_handled()

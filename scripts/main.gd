@@ -19,6 +19,7 @@ var camera_shake_strength = 0
 var game_started = false
 var game_over = false
 var game_ending = false
+var number_players_early = 0
 
 signal gameover(int, float)
 signal camera_shake(a, b)
@@ -36,7 +37,6 @@ func _on_camera_shake(strength, lifetime) -> void:
 	
 func _on_gameover(winner) -> void:
 	camera_shake.emit(0.5, 0.25)
-	pass
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -53,12 +53,16 @@ func _ready() -> void:
 	game_over = false
 	game_started = false
 	game_ending = false
+	number_players_early = 0
 
 	connect("camera_shake", _on_camera_shake)
 	connect("gameover", _on_gameover)
 	get_node("Ready").connect("gamestart", _on_gamestart)
 	get_node("first_player").connect("character_draw", _on_character_draw)
 	get_node("second_player").connect("character_draw", _on_character_draw)
+	get_node("first_player").connect("character_early", _on_character_early)
+	get_node("second_player").connect("character_early", _on_character_early)
+
 
 func _on_character_draw(player):
 	if (not game_started or game_ending):
@@ -85,6 +89,11 @@ func _on_character_draw(player):
 	gameover.emit(player, 10)
 	game_over = true
 
+func _on_character_early(player_index):
+	number_players_early = number_players_early + 1
+	if (number_players_early >= 2):
+		gameover.emit(-1, 10)
+		game_over = true
 
 func _on_gamestart():
 	camera_shake.emit(0.5, 0.25)
