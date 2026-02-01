@@ -123,11 +123,10 @@ func _process(delta):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _unhandled_input(event):
-	if OS.get_name() == "Web":
-		return
-		
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_ESCAPE:
+			if OS.get_name() == "Web":
+				return
 			get_tree().quit()
 		if event.pressed and event.keycode == KEY_SHIFT and game_over:
 			get_tree().reload_current_scene()

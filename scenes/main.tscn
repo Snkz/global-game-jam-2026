@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2dn2x"]
 [ext_resource type="PackedScene" uid="uid://dwk2ykkj67oc" path="res://scenes/character.tscn" id="1_4v135"]
 [ext_resource type="Texture2D" uid="uid://3uejhexesbf6" path="res://textures/chr_ogre_f-00.iso.png" id="2_42vl0"]
-[ext_resource type="Texture2D" uid="uid://bev1j2cylomt" path="res://textures/nebula_1024_left2.png" id="2_be4sb"]
 [ext_resource type="Texture2D" uid="uid://on20xrsq2sw0" path="res://textures/chr_ogre_f-05.iso.png" id="3_gxs86"]
 [ext_resource type="Script" path="res://scripts/character.gd" id="3_lisaq"]
 [ext_resource type="Texture2D" uid="uid://2jolwwnnm2yg" path="res://textures/chr_ogre_f-07.iso.png" id="5_4j6b2"]
@@ -11,13 +10,16 @@
 [ext_resource type="Texture2D" uid="uid://ewuku74md88s" path="res://textures/chr_ogre_m-03.iso.png" id="7_pjt2e"]
 [ext_resource type="Texture2D" uid="uid://gr8ldptq3jhv" path="res://textures/chr_ogre_m-07.iso.png" id="8_nvlg1"]
 [ext_resource type="Texture2D" uid="uid://ldtkdbkpxe4o" path="res://textures/chr_ogre_m-00.iso.png" id="9_sbfmx"]
+[ext_resource type="Texture2D" uid="uid://dd126036qewhe" path="res://textures/BACKGROUND.png" id="11_g85hj"]
 [ext_resource type="Script" path="res://scripts/ready.gd" id="11_orxk0"]
 [ext_resource type="Texture2D" uid="uid://c3xuscdbwlgt4" path="res://textures/GameCube - Super Smash Bros. Melee - Miscellaneous - In-Game Text.png" id="11_xebit"]
+[ext_resource type="Texture2D" uid="uid://dp2qyxd74x1o0" path="res://textures/READY.png" id="12_v1oao"]
 [ext_resource type="Texture2D" uid="uid://dblv0mrdcm6x8" path="res://keyboard/Keyboard & Mouse/Double/keyboard_shift.png" id="13_b6cei"]
 [ext_resource type="Texture2D" uid="uid://bxip4aww677qj" path="res://keyboard/Keyboard & Mouse/Double/keyboard_shift_outline.png" id="14_rerv6"]
 [ext_resource type="FontFile" uid="uid://gilqtnhlidp" path="res://keyboard/Keyboard & Mouse/Fonts/kenney_input_keyboard_&_mouse.otf" id="15_dp6vu"]
 [ext_resource type="Shader" path="res://shaders/impact.gdshader" id="16_gkn73"]
 [ext_resource type="FontFile" uid="uid://by3x4iiigxbwm" path="res://keyboard/Keyboard & Mouse/Fonts/kenney_input_keyboard_&_mouse.ttf" id="16_yeisl"]
+[ext_resource type="Texture2D" uid="uid://doqxy0fjdlpw5" path="res://textures/GO.png" id="17_8r7lc"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_o6dta"]
 animations = [{
@@ -101,10 +103,6 @@ animations = [{
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_vxrib"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tnwfs"]
-atlas = ExtResource("11_xebit")
-region = Rect2(65.0909, 218.636, 282.727, 90.9091)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_coq6e"]
 animations = [{
 "frames": [{
@@ -128,10 +126,6 @@ outline_color = Color(0, 0, 0, 1)
 shadow_size = 10
 shadow_color = Color(0.104686, 5.01041e-05, 0.367052, 0)
 shadow_offset = Vector2(10, 1)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h7ntj"]
-atlas = ExtResource("11_xebit")
-region = Rect2(19.3751, 13.5917, 369.669, 191.159)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gddmb"]
 atlas = ExtResource("11_xebit")
@@ -163,7 +157,7 @@ anchor_mode = 0
 script = ExtResource("1_2dn2x")
 
 [node name="first_player" parent="." instance=ExtResource("1_4v135")]
-position = Vector2(100, 400)
+position = Vector2(180, 400)
 script = ExtResource("3_lisaq")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="first_player"]
@@ -173,7 +167,7 @@ animation = &"attack"
 autoplay = "idle"
 
 [node name="second_player" parent="." instance=ExtResource("1_4v135")]
-position = Vector2(650, 400)
+position = Vector2(620, 400)
 rotation = -3.14159
 scale = Vector2(1, -1)
 script = ExtResource("3_lisaq")
@@ -206,40 +200,45 @@ shape = SubResource("WorldBoundaryShape2D_vxrib")
 
 [node name="TextureRect" type="TextureRect" parent="Bounds"]
 z_index = -1
-offset_left = -120.0
-offset_top = -120.0
-offset_right = 904.0
-offset_bottom = 904.0
-texture = ExtResource("2_be4sb")
+offset_left = -80.0
+offset_top = -40.0
+offset_right = 7920.0
+offset_bottom = 5960.0
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("11_g85hj")
 metadata/_edit_use_anchors_ = true
 
 [node name="Ready" type="Sprite2D" parent="."]
-position = Vector2(400, 100)
-texture = SubResource("AtlasTexture_tnwfs")
+position = Vector2(400, 200)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("12_v1oao")
 script = ExtResource("11_orxk0")
 
 [node name="Timer" type="Timer" parent="Ready"]
 one_shot = true
 
 [node name="shift" type="AnimatedSprite2D" parent="Ready"]
-position = Vector2(0, 300)
+position = Vector2(0, 1100)
+scale = Vector2(10, 10)
 sprite_frames = SubResource("SpriteFrames_coq6e")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.4037
 
 [node name="Label" type="Label" parent="Ready"]
-offset_left = -100.0
-offset_top = 350.0
-offset_right = 102.0
-offset_bottom = 381.0
+offset_left = -1000.0
+offset_top = 1500.0
+offset_right = -798.0
+offset_bottom = 1531.0
+scale = Vector2(10, 10)
 text = "Wait and Press"
 label_settings = SubResource("LabelSettings_ghnjd")
 
 [node name="Go" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(400, 110)
-texture = SubResource("AtlasTexture_h7ntj")
+position = Vector2(400, 300)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("17_8r7lc")
 
 [node name="Timer" type="Timer" parent="Go"]
 wait_time = 0.5

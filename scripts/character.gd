@@ -4,6 +4,9 @@ signal character_draw(int)
 signal character_drawn(int, Vector2)
 signal character_early(int)
 @export var player_index = 1
+var game_over = false
+var can_press = false
+var failure = false
 
 func _ready():
 	get_node("Early").visible = false
@@ -11,9 +14,9 @@ func _ready():
 	get_parent().connect("gameover", _on_gameover)
 	connect("character_drawn", _on_character_drawn)
 	connect("character_early", _on_character_early)
-
-var can_press = false
-var failure = false
+	game_over = false
+	can_press = false
+	failure = false
 
 func _on_gamestart():
 	if (not failure):
@@ -21,6 +24,7 @@ func _on_gamestart():
 	pass
 
 func _on_gameover(winner, score):
+	game_over = true
 	if (winner == player_index):
 		$Sprite2D.play(&"win")
 	else:
@@ -47,6 +51,9 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 func _unhandled_input(event: InputEvent) -> void:
+	if (game_over):
+		return
+
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_SHIFT:
 			match event.location:
