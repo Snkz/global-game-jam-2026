@@ -17,14 +17,11 @@ var noise = null
 var camera_shake_lifetime = 0
 var camera_shake_strength = 0
 var game_started = false
+var game_over = false
 
 signal gameover(int, float)
 signal camera_shake(a, b)
-		
-func _on_restart() -> void:
-	game_time = 0.0
-	camera_shake_lifetime = 0
-	
+
 func do_camera_shake(strength, seed) -> void:
 	var amount = pow(strength, 2)
 	rotation = max_camera_roll * amount * randf_range(-1.0, 1.0)
@@ -36,7 +33,7 @@ func _on_camera_shake(strength, lifetime) -> void:
 	camera_shake_lifetime = max(camera_shake_lifetime, lifetime)
 	camera_shake_strength = max(camera_shake_strength, strength)
 	
-func _on_gameover(score, time) -> void:
+func _on_gameover(winner) -> void:
 	camera_shake.emit(0.5, 0.25)
 	pass
 
@@ -48,15 +45,46 @@ func _ready() -> void:
 	var screen_res = Vector2()
 	screen_res.x = ProjectSettings.get_setting("display/window/size/viewport_width")
 	screen_res.y = ProjectSettings.get_setting("display/window/size/viewport_height")
+	camera_shake_strength = 0;
+	camera_shake_lifetime = 0;
+	offset = Vector2(0.0, 0.0)
+	rotation = 0.0
+	game_over = false
+	game_started = false
 
 	connect("camera_shake", _on_camera_shake)
 	connect("gameover", _on_gameover)
 	get_node("Ready").connect("gamestart", _on_gamestart)
+	get_node("first_player").connect("character_draw", _on_character_draw)
+	get_node("second_player").connect("character_draw", _on_character_draw)
+
+func _on_character_draw(player):
+	if (not game_started):
+		return
+	
+	get_node("Impact").visible = true
+	await get_tree().create_timer(0.05, true, false, true).timeout
+	get_node("ImpactFollowUp").visible = true
+	var first_player = get_node("first_player")
+	var second_player = get_node("second_player")
+	var fp_pos = first_player.position
+	var sp_pos = second_player.position
+	first_player.character_drawn.emit(player, sp_pos)
+	second_player.character_drawn.emit(player, fp_pos)
+
+	await get_tree().create_timer(0.05, true, false, true).timeout
+
+	get_node("Impact").visible = false
+	get_node("ImpactFollowUp").visible = false
+	
+	await get_tree().create_timer(0.5, true, false, true).timeout
+
+	gameover.emit(player, 10)
+	game_over = true
 
 func _on_gamestart():
 	camera_shake.emit(0.5, 0.25)
-	print("HERE")
-
+	game_started = true
   	#var gameover = self.get_node("gameover")
 	#gameover.connect("restart", _on_restart)
 	#var intro = self.get_node("intro")
@@ -88,3 +116,5 @@ func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_ESCAPE:
 			get_tree().quit()
+		if event.pressed and event.keycode == KEY_SHIFT and game_over:
+			get_tree().reload_current_scene()

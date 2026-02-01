@@ -1,17 +1,16 @@
 extends Sprite2D
 signal gamestart()
+var start_tick = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var timer = get_node("Timer")
 	timer.timeout.connect(_on_timer_timeout)
-	connect("gameover", _on_gameover)
+	get_parent().connect("gameover", _on_gameover)
 	var rng = RandomNumberGenerator.new()
-	var wait = rng.randf_range(3, 10);
-	print("WAITING...: ", wait)
+	var wait = rng.randf_range(1, 3);
 	timer.wait_time = wait
 	timer.start()
-
 	
 func _on_timer_timeout():
 	visible = not visible
@@ -20,7 +19,7 @@ func _on_timer_timeout():
 	go.get_node("Timer").start()
 	go.get_node("Timer").timeout.connect(_on_go_timer_timeout)
 	gamestart.emit()
-	print("Game start")
+	start_tick = Time.get_ticks_msec()
 
 func _on_go_timer_timeout():
 	var go = get_parent().get_node("Go")
@@ -31,11 +30,17 @@ func _process(delta: float) -> void:
 	pass
 	
 func _on_gameover(score, time) -> void:
+	var go = get_parent().get_node("Go")
+	go.visible = false
+	go.get_node("Timer").stop()
+	visible = false
+	get_node("Timer").stop()
+	var total_time = Time.get_ticks_msec() - start_tick;
 	var game = get_parent().get_node("Game")
-	game.visble = true
-	game.get_node("Timer").start()
-	game.get_node("Timer").timeout.connect(_on_game_timer_timeout)
+	game.visible = true
+	game.get_node("Label").text = " Mask OFF " + str(total_time).pad_decimals(2) + "ms"
 	
 func _on_game_timer_timeout():
 	var game = get_parent().get_node("Game")
 	game.visible = false
+	
