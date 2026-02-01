@@ -51,9 +51,6 @@ func _ready() -> void:
 	var start_audio = get_node("audio_ready")
 	start_audio.play()
 
-	var screen_res = Vector2()
-	screen_res.x = ProjectSettings.get_setting("display/window/size/viewport_width")
-	screen_res.y = ProjectSettings.get_setting("display/window/size/viewport_height")
 	camera_shake_strength = 0;
 	camera_shake_lifetime = 0;
 	offset = Vector2(0.0, 0.0)
@@ -144,6 +141,13 @@ func _process(delta):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _unhandled_input(event):
+	var min_x = DisplayServer.window_get_size().x / 2 - 20;
+	var max_x = DisplayServer.window_get_size().x - (DisplayServer.window_get_size().x / 2 - 20);
+	
+	if event is InputEventScreenTouch:
+		if (event.pressed and game_over and (event.position.x < min_x or event.position.x > max_x)):
+			get_tree().reload_current_scene()
+		
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_ESCAPE:
 			if OS.get_name() == "Web":

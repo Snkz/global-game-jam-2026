@@ -23,6 +23,10 @@ window/size/viewport_width=800
 window/size/viewport_height=600
 window/size/resizable=false
 
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

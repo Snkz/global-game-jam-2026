@@ -54,6 +54,25 @@ func _unhandled_input(event: InputEvent) -> void:
 	if (game_over):
 		return
 
+	var min_x = DisplayServer.window_get_size().x / 2 - 20;
+	var max_x = DisplayServer.window_get_size().x - (DisplayServer.window_get_size().x / 2 - 20);
+	
+	if event is InputEventScreenTouch:
+		if (event.pressed and event.position.x < min_x):
+			if (player_index == 1 and can_press):
+				character_draw.emit(player_index)
+				get_tree().get_root().set_input_as_handled()
+			elif (player_index == 1 and not can_press and not failure):
+				character_early.emit(player_index)
+				get_tree().get_root().set_input_as_handled()
+		elif (event.pressed and event.position.x > max_x):
+			if (player_index == 2 and can_press):
+				character_draw.emit(player_index)
+				get_tree().get_root().set_input_as_handled()
+			elif (player_index == 2 and not can_press and not failure):
+				character_early.emit(player_index)
+				get_tree().get_root().set_input_as_handled()
+
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_SHIFT:
 			match event.location:

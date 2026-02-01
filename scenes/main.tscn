@@ -220,7 +220,7 @@ script = ExtResource("11_orxk0")
 one_shot = true
 
 [node name="shift" type="AnimatedSprite2D" parent="Ready"]
-position = Vector2(0, 1100)
+position = Vector2(0, 2990)
 scale = Vector2(10, 10)
 sprite_frames = SubResource("SpriteFrames_coq6e")
 animation = &"idle"
@@ -229,9 +229,9 @@ frame_progress = 0.4037
 
 [node name="Label" type="Label" parent="Ready"]
 offset_left = -1000.0
-offset_top = 1500.0
+offset_top = 3390.0
 offset_right = -798.0
-offset_bottom = 1531.0
+offset_bottom = 3421.0
 scale = Vector2(10, 10)
 text = "Wait and Press"
 label_settings = SubResource("LabelSettings_ghnjd")
