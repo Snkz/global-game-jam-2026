@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dwk2ykkj67oc"]
 
-[ext_resource type="Texture2D" uid="uid://ceyjn7a7nbecj" path="res://textures/BROKENSWORD.png" id="1_yhb6h"]
-[ext_resource type="Texture2D" uid="uid://bfswfncbq2maw" path="res://textures/BROKENSWORD_FLASH.png" id="2_5fcba"]
+[ext_resource type="Texture2D" uid="uid://cex26fgq0c1i3" path="res://textures/penaltyIndicatorOPT1_normal.png" id="1_s5xgp"]
+[ext_resource type="Texture2D" uid="uid://yydorbdl18hq" path="res://textures/penaltyIndicatorOPT1_flash.webp" id="2_j56y1"]
 
 [sub_resource type="GDScript" id="GDScript_nf11b"]
 script/source = "extends CharacterBody2D
@@ -80,10 +80,10 @@ height = 144.0
 animations = [{
 "frames": [{
 "duration": 4.0,
-"texture": ExtResource("1_yhb6h")
+"texture": ExtResource("1_s5xgp")
 }, {
-"duration": 1.0,
-"texture": ExtResource("2_5fcba")
+"duration": 2.0,
+"texture": ExtResource("2_j56y1")
 }],
 "loop": true,
 "name": &"default",
@@ -100,7 +100,7 @@ shape = SubResource("CapsuleShape2D_1mhru")
 
 [node name="Early" type="AnimatedSprite2D" parent="."]
 z_index = 1
-position = Vector2(10, -50)
-scale = Vector2(0.25, 0.25)
+position = Vector2(6, -92)
+scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_s8pmm")
 autoplay = "default"

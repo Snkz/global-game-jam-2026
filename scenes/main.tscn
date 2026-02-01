@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://ldtkdbkpxe4o" path="res://textures/chr_ogre_m-00.iso.png" id="9_sbfmx"]
 [ext_resource type="Texture2D" uid="uid://dd126036qewhe" path="res://textures/BACKGROUND.png" id="11_g85hj"]
 [ext_resource type="Script" path="res://scripts/ready.gd" id="11_orxk0"]
-[ext_resource type="Texture2D" uid="uid://c3xuscdbwlgt4" path="res://textures/GameCube - Super Smash Bros. Melee - Miscellaneous - In-Game Text.png" id="11_xebit"]
 [ext_resource type="Texture2D" uid="uid://dp2qyxd74x1o0" path="res://textures/READY.png" id="12_v1oao"]
 [ext_resource type="Texture2D" uid="uid://dblv0mrdcm6x8" path="res://keyboard/Keyboard & Mouse/Double/keyboard_shift.png" id="13_b6cei"]
 [ext_resource type="Texture2D" uid="uid://bxip4aww677qj" path="res://keyboard/Keyboard & Mouse/Double/keyboard_shift_outline.png" id="14_rerv6"]
@@ -20,6 +19,8 @@
 [ext_resource type="Shader" path="res://shaders/impact.gdshader" id="16_gkn73"]
 [ext_resource type="FontFile" uid="uid://by3x4iiigxbwm" path="res://keyboard/Keyboard & Mouse/Fonts/kenney_input_keyboard_&_mouse.ttf" id="16_yeisl"]
 [ext_resource type="Texture2D" uid="uid://doqxy0fjdlpw5" path="res://textures/GO.png" id="17_8r7lc"]
+[ext_resource type="Texture2D" uid="uid://dt0ii16o27pmo" path="res://textures/MASK_text.webp" id="18_vaflw"]
+[ext_resource type="Texture2D" uid="uid://bupebuknhci5x" path="res://textures/OFF_text.webp" id="20_qdcn7"]
 [ext_resource type="AudioStream" uid="uid://bwbxej0f3mh6g" path="res://sounds/desert-wind-1-350398.mp3" id="21_ct5ha"]
 [ext_resource type="AudioStream" uid="uid://bkm7tmrawab7x" path="res://sounds/click.wav" id="22_1bnjt"]
 [ext_resource type="AudioStream" uid="uid://bejdcrrjmu1p4" path="res://sounds/uagh.wav" id="23_0d5a6"]
@@ -131,10 +132,6 @@ outline_color = Color(0, 0, 0, 1)
 shadow_size = 10
 shadow_color = Color(0.104686, 5.01041e-05, 0.367052, 0)
 shadow_offset = Vector2(10, 1)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gddmb"]
-atlas = ExtResource("11_xebit")
-region = Rect2(615.25, 160.46, 447.7, 149.848)
 
 [sub_resource type="LabelSettings" id="LabelSettings_vkm6l"]
 line_spacing = 0.0
@@ -251,8 +248,9 @@ one_shot = true
 
 [node name="Game" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(400, 100)
-texture = SubResource("AtlasTexture_gddmb")
+position = Vector2(284, 119)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("18_vaflw")
 
 [node name="Label" type="Label" parent="Game"]
 offset_left = -100.0
@@ -263,6 +261,12 @@ text = "XX"
 label_settings = SubResource("LabelSettings_vkm6l")
 horizontal_alignment = 1
 autowrap_mode = 2
+
+[node name="Off" type="Sprite2D" parent="Game"]
+position = Vector2(-25, 2600)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("20_qdcn7")
+offset = Vector2(1800, -3143.75)
 
 [node name="Impact" type="CanvasLayer" parent="."]
 visible = false

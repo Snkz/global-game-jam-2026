@@ -1,6 +1,7 @@
 extends Sprite2D
 signal gamestart()
 var start_tick = -1
+var game_over = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -11,6 +12,7 @@ func _ready() -> void:
 	var wait = rng.randf_range(2, 5);
 	timer.wait_time = wait
 	timer.start()
+	game_over = false
 	
 func _on_timer_timeout():
 	visible = not visible
@@ -26,10 +28,18 @@ func _on_go_timer_timeout():
 	go.visible = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+var speed = 2
 func _process(delta: float) -> void:
-	pass
+	if (game_over):
+		var off = get_parent().get_node("Game").get_node("Off")
+		if (off.position.y < 2790):
+			off.position.y += 2 * speed
+			speed = speed + 1
+		if (off.position.y > 2790):
+			off.position.y = 2790
 	
 func _on_gameover(score, time) -> void:
+	game_over = true
 	var go = get_parent().get_node("Go")
 	go.visible = false
 	go.get_node("Timer").stop()
