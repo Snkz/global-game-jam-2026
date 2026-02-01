@@ -42,6 +42,14 @@ func _on_gameover(winner) -> void:
 func _ready() -> void:
 	noise = FastNoiseLite.new()
 	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+	
+	var audio = get_node("audio_background")
+	if not audio.is_playing():
+		audio.play()
+		
+		
+	var start_audio = get_node("audio_ready")
+	start_audio.play()
 
 	var screen_res = Vector2()
 	screen_res.x = ProjectSettings.get_setting("display/window/size/viewport_width")
@@ -68,6 +76,12 @@ func _on_character_draw(player):
 	if (not game_started or game_ending):
 		return
 	
+	var audio = get_node("audio_background")
+	var hit_audio = get_node("audio_shoot")
+	hit_audio.play()
+	if audio.is_playing():
+		audio.stop()
+	
 	game_ending = true
 	get_node("Impact").visible = true
 	await get_tree().create_timer(0.05, true, false, true).timeout
@@ -83,8 +97,13 @@ func _on_character_draw(player):
 
 	get_node("Impact").visible = false
 	get_node("ImpactFollowUp").visible = false
-	
+
 	await get_tree().create_timer(0.5, true, false, true).timeout
+	var hurt_audio = get_node("audio_hurt")
+	hurt_audio.play()
+	
+	if not audio.is_playing():
+		audio.play()
 
 	gameover.emit(player, 10)
 	game_over = true
@@ -98,6 +117,8 @@ func _on_character_early(player_index):
 func _on_gamestart():
 	camera_shake.emit(0.5, 0.25)
 	game_started = true
+	var start_audio = get_node("audio_start")
+	start_audio.play()
   	#var gameover = self.get_node("gameover")
 	#gameover.connect("restart", _on_restart)
 	#var intro = self.get_node("intro")

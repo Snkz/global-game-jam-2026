@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bd0p4lyqmpq2b"]
+[gd_scene load_steps=37 format=3 uid="uid://bd0p4lyqmpq2b"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2dn2x"]
 [ext_resource type="PackedScene" uid="uid://dwk2ykkj67oc" path="res://scenes/character.tscn" id="1_4v135"]
@@ -20,6 +20,11 @@
 [ext_resource type="Shader" path="res://shaders/impact.gdshader" id="16_gkn73"]
 [ext_resource type="FontFile" uid="uid://by3x4iiigxbwm" path="res://keyboard/Keyboard & Mouse/Fonts/kenney_input_keyboard_&_mouse.ttf" id="16_yeisl"]
 [ext_resource type="Texture2D" uid="uid://doqxy0fjdlpw5" path="res://textures/GO.png" id="17_8r7lc"]
+[ext_resource type="AudioStream" uid="uid://bwbxej0f3mh6g" path="res://sounds/desert-wind-1-350398.mp3" id="21_ct5ha"]
+[ext_resource type="AudioStream" uid="uid://bkm7tmrawab7x" path="res://sounds/click.wav" id="22_1bnjt"]
+[ext_resource type="AudioStream" uid="uid://bejdcrrjmu1p4" path="res://sounds/uagh.wav" id="23_0d5a6"]
+[ext_resource type="AudioStream" uid="uid://dd01y2lwjb28" path="res://sounds/shoot.wav" id="24_j60ol"]
+[ext_resource type="AudioStream" uid="uid://berxherju3a5s" path="res://sounds/hit.wav" id="25_7017w"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_o6dta"]
 animations = [{
@@ -281,3 +286,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("CanvasTexture_37o6l")
+
+[node name="audio_background" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("21_ct5ha")
+
+[node name="audio_start" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("22_1bnjt")
+
+[node name="audio_hurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("23_0d5a6")
+
+[node name="audio_shoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("24_j60ol")
+
+[node name="audio_ready" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("25_7017w")
