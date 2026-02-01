@@ -48,10 +48,13 @@ func _on_gameover(score, time) -> void:
 	var total_time = Time.get_ticks_msec() - start_tick;
 	var game = get_parent().get_node("Game")
 	game.visible = true
+	var text = "Player 1: "
+	if (score == 2):
+		text = "Player 2: "
 	if (start_tick != -1):
-		game.get_node("Label").text = " Mask OFF " + str(total_time).pad_decimals(2) + "ms"
+		game.get_node("Label").text = text + str(total_time).pad_decimals(2) + "ms"
 	else:
-		game.get_node("Label").text = " Mask OFF "
+		game.get_node("Label").text = "Double KO"
 
 	
 func _on_game_timer_timeout():

@@ -12,15 +12,19 @@ config_version=5
 
 config/name="Mask OFF"
 config/description="Quick draw game!"
+config/version="1.0"
 run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
+boot_splash/bg_color=Color(0.247059, 0.164706, 0.270588, 1)
 boot_splash/show_image=false
-config/icon="res://icon.svg"
+boot_splash/image="res://textures/MASKOFF_text.webp"
+config/icon="res://textures/MASKOFF_text.webp"
 
 [display]
 
 window/size/viewport_width=800
 window/size/viewport_height=600
+window/size/initial_position_type=0
 window/size/resizable=false
 
 [input_devices]
@@ -31,3 +35,5 @@ pointing/emulate_touch_from_mouse=true
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
+environment/defaults/default_clear_color=Color(0.247059, 0.164706, 0.270588, 1)

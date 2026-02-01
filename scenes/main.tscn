@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bd0p4lyqmpq2b"]
+[gd_scene load_steps=39 format=3 uid="uid://bd0p4lyqmpq2b"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_2dn2x"]
 [ext_resource type="PackedScene" uid="uid://dwk2ykkj67oc" path="res://scenes/character.tscn" id="1_4v135"]
@@ -8,16 +8,16 @@
 [ext_resource type="Texture2D" uid="uid://2jolwwnnm2yg" path="res://textures/chr_ogre_f-07.iso.png" id="5_4j6b2"]
 [ext_resource type="Texture2D" uid="uid://di5bg8xrwo7q2" path="res://textures/chr_ogre_m-05.iso.png" id="6_s6fja"]
 [ext_resource type="Texture2D" uid="uid://ewuku74md88s" path="res://textures/chr_ogre_m-03.iso.png" id="7_pjt2e"]
+[ext_resource type="Texture2D" uid="uid://bwu73di55p36" path="res://textures/chr_ogre_f-08.iso.png" id="7_rwhuu"]
 [ext_resource type="Texture2D" uid="uid://gr8ldptq3jhv" path="res://textures/chr_ogre_m-07.iso.png" id="8_nvlg1"]
 [ext_resource type="Texture2D" uid="uid://ldtkdbkpxe4o" path="res://textures/chr_ogre_m-00.iso.png" id="9_sbfmx"]
+[ext_resource type="Texture2D" uid="uid://bxfc71ylj86j1" path="res://textures/chr_ogre_m-08.iso.png" id="11_4cvkp"]
 [ext_resource type="Texture2D" uid="uid://dd126036qewhe" path="res://textures/BACKGROUND.png" id="11_g85hj"]
 [ext_resource type="Script" path="res://scripts/ready.gd" id="11_orxk0"]
 [ext_resource type="Texture2D" uid="uid://dp2qyxd74x1o0" path="res://textures/READY.png" id="12_v1oao"]
-[ext_resource type="Texture2D" uid="uid://dblv0mrdcm6x8" path="res://keyboard/Keyboard & Mouse/Double/keyboard_shift.png" id="13_b6cei"]
-[ext_resource type="Texture2D" uid="uid://bxip4aww677qj" path="res://keyboard/Keyboard & Mouse/Double/keyboard_shift_outline.png" id="14_rerv6"]
-[ext_resource type="FontFile" uid="uid://gilqtnhlidp" path="res://keyboard/Keyboard & Mouse/Fonts/kenney_input_keyboard_&_mouse.otf" id="15_dp6vu"]
+[ext_resource type="Texture2D" uid="uid://b0nnv5eixgtq2" path="res://textures/touchscreenICON_2.webp" id="14_wi5yt"]
+[ext_resource type="Texture2D" uid="uid://b7ex6yexxxnbx" path="res://textures/touchscreenICON_1.webp" id="15_8e0ft"]
 [ext_resource type="Shader" path="res://shaders/impact.gdshader" id="16_gkn73"]
-[ext_resource type="FontFile" uid="uid://by3x4iiigxbwm" path="res://keyboard/Keyboard & Mouse/Fonts/kenney_input_keyboard_&_mouse.ttf" id="16_yeisl"]
 [ext_resource type="Texture2D" uid="uid://doqxy0fjdlpw5" path="res://textures/GO.png" id="17_8r7lc"]
 [ext_resource type="Texture2D" uid="uid://dt0ii16o27pmo" path="res://textures/MASK_text.webp" id="18_vaflw"]
 [ext_resource type="Texture2D" uid="uid://bupebuknhci5x" path="res://textures/OFF_text.webp" id="20_qdcn7"]
@@ -49,10 +49,13 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 4.0,
 "texture": ExtResource("5_4j6b2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_rwhuu")
 }],
-"loop": true,
+"loop": false,
 "name": &"loss",
 "speed": 5.0
 }, {
@@ -87,10 +90,13 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 4.0,
 "texture": ExtResource("8_nvlg1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_4cvkp")
 }],
-"loop": true,
+"loop": false,
 "name": &"loss",
 "speed": 5.0
 }, {
@@ -113,19 +119,22 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("13_b6cei")
+"texture": ExtResource("14_wi5yt")
 }, {
 "duration": 1.0,
-"texture": ExtResource("14_rerv6")
+"texture": ExtResource("15_8e0ft")
 }],
 "loop": true,
 "name": &"idle",
 "speed": 5.0
 }]
 
+[sub_resource type="SystemFont" id="SystemFont_1wm0i"]
+font_italic = true
+
 [sub_resource type="LabelSettings" id="LabelSettings_ghnjd"]
 line_spacing = 0.0
-font = ExtResource("15_dp6vu")
+font = SubResource("SystemFont_1wm0i")
 font_size = 24
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
@@ -133,11 +142,13 @@ shadow_size = 10
 shadow_color = Color(0.104686, 5.01041e-05, 0.367052, 0)
 shadow_offset = Vector2(10, 1)
 
+[sub_resource type="SystemFont" id="SystemFont_y3yi5"]
+font_italic = true
+
 [sub_resource type="LabelSettings" id="LabelSettings_vkm6l"]
 line_spacing = 0.0
-font = ExtResource("16_yeisl")
-font_size = 18
-outline_size = 4
+font = SubResource("SystemFont_y3yi5")
+outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 10
 shadow_color = Color(0.104686, 5.01041e-05, 0.367052, 0)
@@ -165,8 +176,9 @@ script = ExtResource("3_lisaq")
 [node name="Sprite2D" type="AnimatedSprite2D" parent="first_player"]
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_o6dta")
-animation = &"attack"
+animation = &"idle"
 autoplay = "idle"
+offset = Vector2(-5, 0)
 
 [node name="second_player" parent="." instance=ExtResource("1_4v135")]
 position = Vector2(620, 400)
@@ -176,12 +188,11 @@ script = ExtResource("3_lisaq")
 player_index = 2
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="second_player"]
-position = Vector2(0, 10)
+position = Vector2(20, 20)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_03phb")
-animation = &"win"
+animation = &"loss"
 autoplay = "idle"
-frame_progress = 0.811199
 
 [node name="Bounds" type="StaticBody2D" parent="."]
 collision_mask = 3
@@ -219,22 +230,31 @@ script = ExtResource("11_orxk0")
 [node name="Timer" type="Timer" parent="Ready"]
 one_shot = true
 
-[node name="shift" type="AnimatedSprite2D" parent="Ready"]
-position = Vector2(0, 2990)
+[node name="player_2_shift" type="AnimatedSprite2D" parent="Ready"]
+position = Vector2(1000, 2700)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_coq6e")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.0794793
+
+[node name="Label" type="Label" parent="Ready"]
+visible = false
+offset_left = -870.0
+offset_top = 3390.0
+offset_right = -668.0
+offset_bottom = 3424.0
 scale = Vector2(10, 10)
+text = "Wait and Touch/Shift"
+label_settings = SubResource("LabelSettings_ghnjd")
+
+[node name="player_1_shift" type="AnimatedSprite2D" parent="Ready"]
+position = Vector2(-1000, 2700)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_coq6e")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.4037
-
-[node name="Label" type="Label" parent="Ready"]
-offset_left = -1000.0
-offset_top = 3390.0
-offset_right = -798.0
-offset_bottom = 3421.0
-scale = Vector2(10, 10)
-text = "Wait and Press"
-label_settings = SubResource("LabelSettings_ghnjd")
 
 [node name="Go" type="Sprite2D" parent="."]
 visible = false
@@ -248,15 +268,16 @@ one_shot = true
 
 [node name="Game" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(284, 119)
+position = Vector2(300, 119)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("18_vaflw")
 
 [node name="Label" type="Label" parent="Game"]
-offset_left = -100.0
-offset_top = 400.0
-offset_right = 102.0
-offset_bottom = 431.0
+offset_left = -300.0
+offset_top = 2130.0
+offset_right = -100.0
+offset_bottom = 2154.0
+scale = Vector2(8, 8)
 text = "XX"
 label_settings = SubResource("LabelSettings_vkm6l")
 horizontal_alignment = 1
@@ -284,6 +305,7 @@ texture = SubResource("CanvasTexture_37o6l")
 visible = false
 
 [node name="TextureRect" type="TextureRect" parent="ImpactFollowUp"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

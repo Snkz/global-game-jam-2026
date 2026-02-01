@@ -38,6 +38,12 @@ func _on_character_early(player_index):
 		get_node("Early").visible = true
 		get_parent().camera_shake.emit(0.15, 0.25)
 		$Sprite2D.play(&"attack")
+		var ready = get_parent().get_node("Ready")
+		var button = ready.get_node("player_1_shift")
+		if (player_index == 2):
+			button = ready.get_node("player_2_shift")
+		
+		button.visible = false
 
 func _on_character_drawn(winner, pos):
 	position = pos
