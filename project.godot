@@ -24,8 +24,10 @@ config/icon="res://textures/MASKOFF_text.webp"
 
 window/size/viewport_width=800
 window/size/viewport_height=600
-window/size/initial_position_type=0
-window/size/resizable=false
+window/size/mode=3
+window/size/borderless=true
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [input_devices]
 

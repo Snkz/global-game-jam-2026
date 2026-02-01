@@ -236,7 +236,7 @@ scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_coq6e")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.0794793
+frame_progress = 0.609387
 
 [node name="Label" type="Label" parent="Ready"]
 visible = false
