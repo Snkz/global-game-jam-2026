@@ -18,6 +18,7 @@ var camera_shake_lifetime = 0
 var camera_shake_strength = 0
 var game_started = false
 var game_over = false
+var game_ending = false
 
 signal gameover(int, float)
 signal camera_shake(a, b)
@@ -51,6 +52,7 @@ func _ready() -> void:
 	rotation = 0.0
 	game_over = false
 	game_started = false
+	game_ending = false
 
 	connect("camera_shake", _on_camera_shake)
 	connect("gameover", _on_gameover)
@@ -59,9 +61,10 @@ func _ready() -> void:
 	get_node("second_player").connect("character_draw", _on_character_draw)
 
 func _on_character_draw(player):
-	if (not game_started):
+	if (not game_started or game_ending):
 		return
 	
+	game_ending = true
 	get_node("Impact").visible = true
 	await get_tree().create_timer(0.05, true, false, true).timeout
 	get_node("ImpactFollowUp").visible = true
@@ -81,6 +84,7 @@ func _on_character_draw(player):
 
 	gameover.emit(player, 10)
 	game_over = true
+
 
 func _on_gamestart():
 	camera_shake.emit(0.5, 0.25)

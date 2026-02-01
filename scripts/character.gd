@@ -28,16 +28,13 @@ func _on_gameover(winner, score):
 func on_lost():
 	if (not failure):
 		failure = true
-		# Play animation for first time
-		if (not can_press):
-			# Show failure indicator
-			get_node("Early").visible = true
-			get_parent().camera_shake.emit(0.15, 0.25)
-			$Sprite2D.play(&"attack")
+		# Show failure indicator
+		get_node("Early").visible = true
+		get_parent().camera_shake.emit(0.15, 0.25)
+		$Sprite2D.play(&"attack")
 
 func _on_character_drawn(winner, pos):
 	position = pos
-	print("POS", winner, pos)
 	$Sprite2D.play(&"attack")
 	
 func _physics_process(delta: float) -> void:
@@ -52,16 +49,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.pressed and event.keycode == KEY_SHIFT:
 			match event.location:
 				KEY_LOCATION_LEFT:
-					if (player_index == 1):
+					if (player_index == 1 and can_press):
 						character_draw.emit(player_index)
-						if (can_press and not failure):
-							can_press = false
-						else:
+					elif (player_index == 1 and not can_press):
 							on_lost()
 				KEY_LOCATION_RIGHT:
-					if (player_index == 2):
+					if (player_index == 2 and can_press):
 						character_draw.emit(player_index)
-						if (can_press and not failure):
-							can_press = false
-						else:
+					elif (player_index == 2 and not can_press):
 							on_lost()
