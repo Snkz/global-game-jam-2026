@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dwk2ykkj67oc"]
+[gd_scene load_steps=6 format=3 uid="uid://dwk2ykkj67oc"]
 
-[ext_resource type="Texture2D" uid="uid://c3j1x6y6p6ftl" path="res://keyboard/Flairs/flairs_sheet_double.png" id="1_fo4t5"]
+[ext_resource type="Texture2D" uid="uid://ceyjn7a7nbecj" path="res://textures/BROKENSWORD.png" id="1_yhb6h"]
+[ext_resource type="Texture2D" uid="uid://bfswfncbq2maw" path="res://textures/BROKENSWORD_FLASH.png" id="2_5fcba"]
 
 [sub_resource type="GDScript" id="GDScript_nf11b"]
 script/source = "extends CharacterBody2D
@@ -75,6 +76,20 @@ func _unhandled_input(event: InputEvent) -> void:
 radius = 72.0
 height = 144.0
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_s8pmm"]
+animations = [{
+"frames": [{
+"duration": 4.0,
+"texture": ExtResource("1_yhb6h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_5fcba")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="character" type="CharacterBody2D"]
 position = Vector2(1, 0)
 collision_layer = 2
@@ -83,9 +98,9 @@ script = SubResource("GDScript_nf11b")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_1mhru")
 
-[node name="Early" type="Sprite2D" parent="."]
+[node name="Early" type="AnimatedSprite2D" parent="."]
 z_index = 1
-position = Vector2(0, -120)
-texture = ExtResource("1_fo4t5")
-region_enabled = true
-region_rect = Rect2(684, 178, 86, 78)
+position = Vector2(10, -50)
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_s8pmm")
+autoplay = "default"

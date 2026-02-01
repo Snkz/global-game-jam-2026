@@ -236,7 +236,7 @@ label_settings = SubResource("LabelSettings_ghnjd")
 
 [node name="Go" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(400, 300)
+position = Vector2(400, 200)
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("17_8r7lc")
 
